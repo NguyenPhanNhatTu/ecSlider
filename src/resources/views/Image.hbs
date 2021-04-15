@@ -1,0 +1,122 @@
+<div class="multiple-items">
+  <h2>Loadding Data</h2>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <br>
+      <div class="form-group">
+        <label for="example-input-file">Tên ảnh</label>
+        <input type="text" id="nameImg" class="form-control-file border">
+      </div>
+      <div class="form-group">
+        <label for="example-input-file">Upload Ảnh</label>
+        <input type="file" id="url" class="form-control-file border" onchange="readURL(this);">
+      </div>
+      <button type="submit" class="btn btn-primary submit-btn" onclick="addDataToMongo()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+
+<script>
+  var slideIndex;
+  var file;
+  var firebaseConfig = {
+    apiKey: "AIzaSyB3ElgD4tBiT3V939ahln1quADmGCo75yo",
+    authDomain: "uploadimage-d09ee.firebaseapp.com",
+    projectId: "uploadimage-d09ee",
+    storageBucket: "uploadimage-d09ee.appspot.com",
+    messagingSenderId: "1047480937718",
+    appId: "1:1047480937718:web:0e6c51120f9d52731010d7",
+    measurementId: "G-9L3D8VX4ZB"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const ref = firebase.storage().ref();
+  // var filename = $('input[type=file]').val();
+  // var submitBtn = $('.submit-btn');
+  // KHai bào hàm hiển thị slide
+  const getData=()=>{
+    const getUser = db
+    .collection("images")
+    // .where("name", "nghia") // field - value
+    .get()
+    .then((snapshot) => {
+      let strHtml=''
+       snapshot.docs.forEach(doc => {
+       var item = doc.data();
+        strHtml+=`<div class="slider_item" style="display: flex;flex-direction: column;align-items: center;">
+    <img style="height: 300px" src="${item.image}" alt="abc">
+    <h4>${item.name}</h4>
+  </div>`
+        
+      }); 
+      console.log($(".multiple-items")[0])
+      $(".multiple-items")[0].outerHTML ="<div class='multiple-items'>" +strHtml+"</div>";
+      $('.multiple-items').slick({
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      speed:400,
+      autoplay:true,
+      dots:true
+    });
+      //var allImages = snapshot.docs;
+    });
+
+  
+  }
+    getData()
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      var image = new Image();
+
+      reader.onload = function (e) {
+        image.src = e.target.result;
+        // console.log(image.src);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+
+      file = input.files[0];
+      console.log(file.name);
+    }
+  }
+
+  async function addDataToMongo() {
+    if (file != null) {
+      var title = document.getElementById("nameImg").value;
+      const name = +new Date() + "-" + file.name;
+      const task = ref.child(name).put(file);
+      task
+        .then((snapshot) => snapshot.ref.getDownloadURL())
+        .then(async (url) => {
+          console.log(url);
+          file = null;
+          // Save url to DB
+          const res = await db.collection("images").add({
+            image: url,
+            name: title,
+          });
+          getData()
+          document.getElementById("nameImg").value = '';
+        })
+        .catch(console.error);
+    } else {
+      alert('Choose a image!');
+    }
+  }
+
+
+</script>
