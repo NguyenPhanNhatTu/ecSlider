@@ -8,7 +8,7 @@ const methodOverride = require('method-override')
 const db= require('./config/db');
 var admin = require("firebase-admin");
 const uuid = require('uuid-v4');
-
+const siteRouter = require('./routes/site');
 //connnect 
 db.connect();
 app.use(
@@ -28,7 +28,8 @@ app.engine('hbs',
 );
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources','views'));
-route(app);
+// route(app);
+app.use('/', siteRouter);
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
