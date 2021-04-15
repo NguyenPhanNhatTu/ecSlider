@@ -29,7 +29,7 @@ app.engine('hbs',
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources','views'));
 // route(app);
-app.use('', siteRouter);
+app.use('/', siteRouter);
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
