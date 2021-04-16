@@ -1,8 +1,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
 
 <div class="row" style="width: 100%; height: 100%">
-
 
   <div class="column" style="width: 70%;">
     <div class="column multiple-items">
@@ -25,12 +25,11 @@
       </div>
     </div>
   </div>
-
-  <div class="column list-items" style="background-color:#bbb; width: 30%;">
-    <h2>List Image</h2>
+  <div class="list-items list-group" style="background-color:#bbb; width: 30%;">
 
   </div>
 </div>
+
 
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
@@ -64,11 +63,12 @@
         let strHtml = '', strListImage = '';
         snapshot.docs.forEach(doc => {
           var item = doc.data();
-          strListImage += `<div class="row"><a style="margin-right: 20px" href=${item.image}>${item.name}</a><img src="${item.image}" width="50px"/> </div>`;
+          strListImage += `<div class="row card-body"><a style="margin-right: 20px" href=${item.image}>${item.name}</a><img src="${item.image}" width="50px"/> </div>`;
+          
           strHtml += `<div class="slider_item" style="display: flex;flex-direction: column;align-items: center;">
-    <img style="height: 300px" src="${item.image}" alt="abc">
-    <h4>${item.name}</h4>
-  </div>`
+          <img style="height: 300px" src="${item.image}" alt="abc">
+          <h4>${item.name}</h4>
+           </div>`
 
         });
         console.log($(".multiple-items")[0])
@@ -81,7 +81,7 @@
           speed: 400,
           autoplay: true,
           dots: true,
-          
+
         });
         //var allImages = snapshot.docs;
       });
