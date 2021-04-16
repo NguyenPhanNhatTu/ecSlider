@@ -1,8 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const handlebars = require('express-handlebars');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8000;
 const route = require('./routes');
 const methodOverride = require('method-override')
 const db= require('./config/db');
@@ -31,7 +32,7 @@ app.set('views', path.join(__dirname, 'resources','views'));
 // route(app);
 app.use('/', siteRouter);
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+  console.log(`Server is running`,port);
 });
 
  
