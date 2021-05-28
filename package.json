@@ -1,7 +1,6 @@
 {
   "name": "uploadanh",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -23,5 +22,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NguyenPhanNhatTu/ecSlider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NguyenPhanNhatTu/ecSlider/issues"
+  },
+  "homepage": "https://github.com/NguyenPhanNhatTu/ecSlider#readme",
+  "description": ""
 }

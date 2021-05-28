@@ -4,6 +4,12 @@
 h2 {
   text-align: center;
 }
+.image-logo{
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-right: 4px; 
+}
 /* Slideshow container */
 .slideshow-container {
   max-width: 500px;
